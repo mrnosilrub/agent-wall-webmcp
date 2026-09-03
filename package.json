@@ -1,0 +1,38 @@
+{
+  "name": "agent-wall-webmcp",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "description": "Fixture-safe Agent Wall WebMCP challenge projection",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest run",
+    "test:contracts": "vitest run tests/contracts.test.ts tests/kernel.test.ts",
+    "test:mcp": "vitest run tests/mcp-http.test.ts tests/parity.test.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "npm run typecheck && vite build",
+    "test:browser": "npm run build && node scripts/browser-smoke.mjs",
+    "scrub": "node scripts/scrub.mjs",
+    "check": "npm run scrub && npm run typecheck && npm test && npm run build && npm run test:browser",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.0.0",
+    "@noble/hashes": "2.3.0",
+    "agents": "0.21.0",
+    "zod": "4.2.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20260903.1",
+    "@types/node": "24.3.0",
+    "puppeteer-core": "25.9.0",
+    "typescript": "5.9.3",
+    "vite": "7.3.6",
+    "vitest": "3.2.7",
+    "wrangler": "4.128.0"
+  }
+}

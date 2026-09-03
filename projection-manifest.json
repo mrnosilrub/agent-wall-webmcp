@@ -1,0 +1,42 @@
+{
+  "entries": [
+    {
+      "path": "contracts/AgentWallParcelDeed.sol",
+      "sha256": "2e0213e7a7e34317dfeabd10e47dcdf7e633b3546a3c5068f643090b0b5efd7c"
+    },
+    {
+      "path": "src/domain/pricing.ts",
+      "sha256": "9da885738c63cc6530857167eec81f2db0d6b9800b85a43066b0c3ff2a70a155"
+    },
+    {
+      "path": "src/domain/scene-v1-canonical.ts",
+      "sha256": "921d886795cb00b86bf316ee543deaab3c88873e2a15207653097fc004a2be16"
+    },
+    {
+      "path": "src/domain/scene-v1-compile.ts",
+      "sha256": "522a553e4fadd9aa1c9c966ce398c05330839e4bda1c2e38de4aa81c6962472c"
+    },
+    {
+      "path": "src/domain/scene-v1-format.ts",
+      "sha256": "9aae7bbcca0d56ab7a1ac7970ac3bfe9fcbb0127aaf64fbbdd7052bd3c5f4f3f"
+    },
+    {
+      "path": "src/domain/scene-v1-plan.ts",
+      "sha256": "76cc5834b13bb7133df5b6fe2ee92014f64458d21f9a24f24e93d8e350e700d0"
+    },
+    {
+      "path": "src/domain/scene-v1-predicate.ts",
+      "sha256": "455de35f14db5e4da22b6fdc73b90d1431cdb3d36bc047218dc40c155d7a43b5"
+    },
+    {
+      "path": "src/domain/scene-v1-program.ts",
+      "sha256": "6d8f0a0489c52c9c914fb852c441e3052bddc45809e756d275eaa95cace62de9"
+    },
+    {
+      "path": "src/domain/scene.ts",
+      "sha256": "8ea738d18d2432b44137a921e03c6f65b2f551836da69d422a5df4526b7e3360"
+    }
+  ],
+  "method": "positive-allowlist",
+  "schema": "agent-wall-public-projection-v1"
+}
