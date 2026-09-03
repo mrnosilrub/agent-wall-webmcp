@@ -4,13 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="A fixture-safe Agent Wall WebMCP challenge demonstration." />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f6f3ec" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>Agent Wall — WebMCP Challenge</title>
+
   </head>
   <body>
-    <main id="app" aria-live="polite">
-      <h1>Agent Wall</h1>
-      <p>Loading the fixture-safe WebMCP challenge surface…</p>
-    </main>
+    <main id="app"></main>
+    <noscript>
+      <p>
+        The Agent Wall challenge view needs JavaScript. Nothing is fetched from the
+        network either way — the wall, fixtures, and staging all live in this page.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
