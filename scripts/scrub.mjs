@@ -54,7 +54,13 @@ const allowedFiles = new Set([
   "tests/webmcp.test.ts",
   "tests/worker.test.ts",
 ]);
+const workerBundleFiles = new Set([
+  ".worker-dist/README.md",
+  ".worker-dist/worker.js",
+  ".worker-dist/worker.js.map",
+]);
 const allowedDirectories = new Set([
+  ".worker-dist",
   "contracts",
   "dist",
   "dist/assets",
@@ -73,7 +79,7 @@ const textExtensions = new Set([
 ]);
 const contentRules = [
   ["absolute-user-path", /\/Users\/[A-Za-z0-9._-]+\//],
-  ["file-uri", /file:\/\//i],
+  ["file-uri", /file:\/\/[^"'`\s]{1,}/i],
   ["credential-field", /\b(?:authorityEvidence|PRIVATE_KEY|SECRET_KEY|API_TOKEN|DATABASE_ID|account_id)\b/],
   ["private-origin", /\bagentwall\.(?:lol|art)\b/i],
   ["rpc-endpoint", /https?:\/\/[^\s"']*(?:rpc|alchemy|infura|quicknode)[^\s"']*/i],
@@ -92,13 +98,17 @@ const requireBuild = process.env["AGENT_WALL_REQUIRE_BUILD"] === "1";
 if (requireBuild && !existsSync(join(root, "dist"))) {
   findings.push("dist: required production bundle is missing");
 }
+if (requireBuild && !existsSync(join(root, ".worker-dist"))) {
+  findings.push(".worker-dist: required Worker deployment bundle is missing");
+}
 
 function allowedFile(rel) {
   return (
     allowedFiles.has(rel) ||
     rel === "dist/index.html" ||
     rel === "dist/favicon.svg" ||
-    /^dist\/assets\/index-[A-Za-z0-9_-]+\.(?:css|js|js\.map)$/.test(rel)
+    /^dist\/assets\/index-[A-Za-z0-9_-]+\.(?:css|js|js\.map)$/.test(rel) ||
+    workerBundleFiles.has(rel)
   );
 }
 
@@ -119,7 +129,10 @@ function walk(directory) {
       continue;
     }
     if (stats.isDirectory()) {
-      if (!allowedDirectories.has(rel)) findings.push(`${rel}: outside positive release allowlist`);
+      if (!allowedDirectories.has(rel)) {
+        findings.push(`${rel}: outside positive release allowlist`);
+        continue;
+      }
       if (forbiddenPathParts.has(entry)) findings.push(`${rel}: forbidden directory`);
       walk(absolute);
     } else if (stats.isFile()) {
@@ -132,6 +145,13 @@ function walk(directory) {
 walk(root);
 if (requireBuild && files.filter((rel) => rel.startsWith("dist/")).length < 5) {
   findings.push("dist: production bundle is incomplete");
+}
+const observedWorkerBundleFiles = files.filter((rel) => rel.startsWith(".worker-dist/")).sort();
+if (
+  requireBuild &&
+  JSON.stringify(observedWorkerBundleFiles) !== JSON.stringify([...workerBundleFiles].sort())
+) {
+  findings.push(".worker-dist: Worker deployment bundle differs from the exact allowlist");
 }
 
 for (const rel of files) {

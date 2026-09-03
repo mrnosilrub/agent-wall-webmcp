@@ -15,10 +15,11 @@
     "test:mcp": "npm run build && node scripts/mcp-http-smoke.mjs",
     "typecheck": "tsc --noEmit",
     "build": "npm run typecheck && vite build",
+    "build:worker": "wrangler deploy --dry-run --outdir .worker-dist",
     "test:browser": "npm run build && node scripts/browser-smoke.mjs",
     "scrub": "node scripts/scrub.mjs",
     "scrub:bundle": "AGENT_WALL_REQUIRE_BUILD=1 node scripts/scrub.mjs",
-    "check": "npm run typecheck && npm test && npm run build && npm run scrub:bundle && npm run test:browser && npm run test:mcp && npm run scrub:bundle",
+    "check": "npm run typecheck && npm test && npm run build && npm run build:worker && npm run scrub:bundle && npm run test:browser && npm run test:mcp && npm run build:worker && npm run scrub:bundle",
     "deploy": "wrangler deploy"
   },
   "dependencies": {
