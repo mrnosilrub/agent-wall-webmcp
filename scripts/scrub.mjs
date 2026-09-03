@@ -194,7 +194,9 @@ for (const entry of manifest.entries) {
 let historyRevisions = 0;
 let historyFiles = 0;
 const gitHistoryScanned = existsSync(join(root, ".git"));
-if (gitHistoryScanned) {
+if (!gitHistoryScanned) {
+  findings.push("git history is required for a release scrub");
+} else {
   try {
     const status = execFileSync("git", ["status", "--porcelain=v1", "--ignored=no"], {
       cwd: root,
